@@ -14,10 +14,12 @@ def home():
 
     if request.method == 'GET':
         session['csrf_token'] = str(uuid.uuid4())
-        print(session['csrf_token'])
+        # print(session['csrf_token'])
 
     if request.method == 'POST':
-        if request.form['csrf_token'] == session['csrf_token']:
+        # if request.form['csrf_token'] == session['csrf_token']:
+        # Using the instructor's solution
+        if request.form.get('csrf_token', None) == session['csrf_token']:
             g = Grade(
                 student=request.form['student'],
                 assignment=request.form['assignment'],
@@ -25,10 +27,10 @@ def home():
             )
             # print("(" + request.form['grade'] + ")")
             g.save()
-        else:
-            print("""test not passed with session['csrf_token'] being {}
-            and request.form['csrf_token'] being {}""".format(session['csrf_token'],
-            request.form['csrf_token']))
+        # else:
+        #     print("""test not passed with session['csrf_token'] being {}
+        #     and request.form['csrf_token'] being {}""".format(session['csrf_token'],
+        #     request.form['csrf_token']))
 
     body = """
 <html>
